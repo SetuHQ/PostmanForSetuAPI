@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "9e882db5-4b5f-43d0-8e13-a4f9b1834808",
+		"name": "test-biller",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "fetchCustomerBills",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
+						"exec": [
+							"var schemeId = \"4331-9bbc-6b93265b-fbe98dae-20b4\";",
+							"var secret = '77521f510c0f-7e2f-40dc-a9d4-d05250325419';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{BearerToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerIdentifiers\": [\n        {\n            \"attributeName\": \"mobileNumber\",\n            \"attributeValue\": \"8481779999\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://setu-test.free.beeceptor.com/bills/fetch",
+					"protocol": "https",
+					"host": [
+						"setu-test",
+						"free",
+						"beeceptor",
+						"com"
+					],
+					"path": [
+						"bills",
+						"fetch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetchReceipt",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
+						"exec": [
+							"var schemeId = \"4331-9bbc-6b93265b-fbe98dae-20b4\";",
+							"var secret = '77521f510c0f-7e2f-40dc-a9d4-d05250325419';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{BearerToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"billerBillID\"   : \"12123131322\",\n    \"platformBillID\" : \"SETU121341312121\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"TXN12121219\",\n        \"uniquePaymentRefID\"       : \"XXXXAYYDDD999999\",\n        \"amountPaid\" : {\n            \"value\" : 99000 \n        },\n        \"billAmount\" : {\n            \"value\" : 99000\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://setu-test.free.beeceptor.com/bills/fetchReceipt",
+					"protocol": "https",
+					"host": [
+						"setu-test",
+						"free",
+						"beeceptor",
+						"com"
+					],
+					"path": [
+						"bills",
+						"fetchReceipt"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
