@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "b57c411e-19e0-45da-a4e4-956356dfbc8a",
+		"name": "BillerReporting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Setu Reports",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a2f60767-6711-4d13-afcf-7c934690a98c",
+						"exec": [
+							"var schemeId = \"bb05c392-430f-48x4-cc6f-632b7ead4cec\";",
+							"var secret = 'hadad122-23cb-424b-bd1d-bccb3a90328c';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{BearerToken}}",
+						"type": "text"
+					},
+					{
+						"key": "X-SETU-PRODUCT-INSTANCE-ID",
+						"value": "2300654982889032",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sandbox.setu.co/api/reports?reportForProductInstanceID=4886532372437613&reportDataStartDate=2019-11-01T05:30:00Z&reportDataEndDate=2019-11-09T05:30:00Z",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"setu",
+						"co"
+					],
+					"path": [
+						"api",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "reportForProductInstanceID",
+							"value": "2886532372437613"
+						},
+						{
+							"key": "reportDataStartDate",
+							"value": "2019-11-01T05:30:00Z"
+						},
+						{
+							"key": "reportDataEndDate",
+							"value": "2019-11-09T05:30:00Z"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
