@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "6f9f1091-e291-4828-ad8a-bc02abe37b3b",
+		"name": "GST - bills",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "validations/gst-challan",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
+						"exec": [
+							"",
+							"postman.setEnvironmentVariable(\"productInstanceID\", \"5118455924889845\")",
+							"var schemeId = \"fbe98dae-20b4-4e31-9bbc-77531f510c0f\";",
+							"var secret = '6b93265b-7e2f-40dc-a9d4-d05250325419';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Setu-Product-Instance-ID",
+						"type": "text",
+						"value": "{{productInstanceID}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{BearerToken}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "validatePDFRequest",
+							"type": "file",
+							"src": "/Users/ranjith/Downloads/CHALLAN.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://sandbox.setu.co/api//utilities/bills/validations/gst-challan",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"setu",
+						"co"
+					],
+					"path": [
+						"api",
+						"",
+						"utilities",
+						"bills",
+						"validations",
+						"gst-challan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GST - Create bill - gstpayer",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
+						"exec": [
+							"",
+							"",
+							"postman.setEnvironmentVariable(\"productInstanceID\", \"5118455924889845\")",
+							"var schemeId = \"fbe98dae-20b4-4e31-9bbc-77531f510c0f\";",
+							"var secret = '6b93265b-7e2f-40dc-a9d4-d05250325419';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Setu-Product-Instance-ID",
+						"value": "{{productInstanceID}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{BearerToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"Customer\": {\n            \"additionalInfo\": {\n                \"Mobile\": \"9XXXXX1795\",\n                \"Address\": \"XXXXXXXXXX Karnataka,560029\",\n                \"EmailID\": \"rXXXXXXX@XXXXXXXXom\"\n            },\n            \"name\": \"BHARTI AIRTEL LIMITED\"\n        },\n        \"additionalInfo\": {\n            \"gstin\": \"29AAACB2894G1ZJ\",\n            \"entityName\": \"BHARTI AIRTEL LIMITED\",\n            \"cpin\": \"19012900432175\",\n            \"remittingBank\": \"KOTAK MAHINDRA BANK LIMITED\",\n            \"beneficiaryDetails\": {\n                \"accountNo\": \"19012900432175\",\n                \"bankName\": \"Reserve Bank of India\",\n                \"ifsc\": \"RBIS0GSTPMT\"\n            }\n        },\n        \"aggregates\": {\n            \"discount\": {\n                \"amount\": {\n                    \"value\": 0\n                },\n                \"displayName\": \"\"\n            },\n            \"fee\": {\n                \"amount\": {\n                    \"value\": 0\n                },\n                \"displayName\": \"\"\n            },\n            \"itemQuantity\": {\n                \"displayName\": \"\",\n                \"quantity\": 0\n            },\n            \"subTotal\": {\n                \"amount\": {\n                    \"value\": 0\n                },\n                \"displayName\": \"\"\n            },\n            \"tax\": {\n                \"amount\": {\n                    \"value\": 0\n                },\n                \"displayName\": \"\"\n            },\n            \"total\": {\n                \"amount\": {\n                    \"currencyCode\": \"INR\",\n                    \"value\": 23000\n                },\n                \"displayName\": \"Total Amount\"\n            }\n        },\n        \"amountExactness\": \"EXACT\",\n        \"billType\": \"GST\",\n        \"billerBillID\": \"19012900432175\",\n        \"billerProductInstanceID\": \"%s0\",\n        \"customerAccount\": {\n            \"additionalInfo\": null,\n            \"id\": \"29AAACB2894G1ZJ\"\n        },\n        \"discounts\": null,\n        \"dueDate\": \"2019-02-09T00:00:00.000Z\",\n        \"fees\": null,\n        \"generatedOn\": \"2019-01-25T00:00:00.000Z\",\n        \"items\": null,\n        \"recurrence\": \"ONE_TIME\",\n        \"taxes\": null,\n        \"isValid\": true,\n        \"reason\": null\n    }"
+				},
+				"url": {
+					"raw": "https://sandbox.setu.co/api//utilities/bills",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"setu",
+						"co"
+					],
+					"path": [
+						"api",
+						"",
+						"utilities",
+						"bills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GST - Get bill with ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
+						"exec": [
+							"",
+							"",
+							"postman.setEnvironmentVariable(\"productInstanceID\", \"5118455924889845\")",
+							"var schemeId = \"fbe98dae-20b4-4e31-9bbc-77531f510c0f\";",
+							"var secret = '6b93265b-7e2f-40dc-a9d4-d05250325419';",
+							"",
+							"",
+							"var jti = Math.floor(Math.random()*1e15) + '';",
+							"",
+							"function base64url(source) {",
+							"\t// Encode in classical base64",
+							"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+							"",
+							"\t// Remove padding equal characters",
+							"\tencodedSource = encodedSource.replace(/=+$/, '');",
+							"",
+							"\t// Replace characters according to base64url specifications",
+							"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
+							"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+							"",
+							"\treturn encodedSource;",
+							"}",
+							"",
+							"function addIAT(request) {",
+							"\tvar iat = Math.floor(Date.now() / 1000);",
+							"\tdata.iat = iat;",
+							"\treturn data;",
+							"}",
+							"",
+							"",
+							"var header = {",
+							"\t\"typ\": \"JWT\",",
+							"\t\"alg\": \"HS256\"",
+							"};",
+							"",
+							"var data = {",
+							"\t\"aud\": schemeId,",
+							"\t\"jti\": jti",
+							"};",
+							"",
+							"data = addIAT(data);",
+							"",
+							"",
+							"",
+							"// encode header",
+							"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+							"var encodedHeader = base64url(stringifiedHeader);",
+							"",
+							"// encode data",
+							"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+							"console.log(data)",
+							"var encodedData = base64url(stringifiedData);",
+							"",
+							"// build token",
+							"var token = encodedHeader + \".\" + encodedData;",
+							"",
+							"// sign token",
+							"var signature = CryptoJS.HmacSHA256(token, secret);",
+							"signature = base64url(signature);",
+							"var signedToken = token + \".\" + signature;",
+							"console.log(signedToken);",
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Setu-Product-Instance-ID",
+						"value": "{{productInstanceID}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{BearerToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sandbox.setu.co/api//utilities/bills/228934899392840940",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"setu",
+						"co"
+					],
+					"path": [
+						"api",
+						"",
+						"utilities",
+						"bills",
+						"228934899392840940"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
