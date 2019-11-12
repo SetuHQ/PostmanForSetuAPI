@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9e882db5-4b5f-43d0-8e13-a4f9b1834808",
+		"_postman_id": "5075a832-ce59-42c4-8ca4-e07044429384",
 		"name": "test-biller",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -100,13 +100,12 @@
 					"raw": "{\n    \"customerIdentifiers\": [\n        {\n            \"attributeName\": \"mobileNumber\",\n            \"attributeValue\": \"8481779999\"\n        }\n    ]\n}"
 				},
 				"url": {
-					"raw": "https://setu-test.free.beeceptor.com/bills/fetch",
-					"protocol": "https",
+					"raw": "http://mock-biller-api.setu.tech/bills/fetch",
+					"protocol": "http",
 					"host": [
-						"setu-test",
-						"free",
-						"beeceptor",
-						"com"
+						"mock-biller-api",
+						"setu",
+						"tech"
 					],
 					"path": [
 						"bills",
@@ -211,13 +210,12 @@
 					"raw": "{\n    \"billerBillID\"   : \"12123131322\",\n    \"platformBillID\" : \"SETU121341312121\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"TXN12121219\",\n        \"uniquePaymentRefID\"       : \"XXXXAYYDDD999999\",\n        \"amountPaid\" : {\n            \"value\" : 99000 \n        },\n        \"billAmount\" : {\n            \"value\" : 99000\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "https://setu-test.free.beeceptor.com/bills/fetchReceipt",
-					"protocol": "https",
+					"raw": "http://mock-biller-api.setu.tech/bills/fetchReceipt",
+					"protocol": "http",
 					"host": [
-						"setu-test",
-						"free",
-						"beeceptor",
-						"com"
+						"mock-biller-api",
+						"setu",
+						"tech"
 					],
 					"path": [
 						"bills",
