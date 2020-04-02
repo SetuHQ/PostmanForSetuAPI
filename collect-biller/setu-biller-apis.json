@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "79a0a386-64e0-493b-9162-728053a96beb",
+		"_postman_id": "3cdadb4e-e5ae-49a0-a377-4923668bab3a",
 		"name": "test-biller",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -62,6 +62,8 @@
 							"        pm.expect(bill.aggregates.total.displayName).to.exist;",
 							"        pm.expect(bill.aggregates.total.amount).to.exist;",
 							"        pm.expect(intRe.test(bill.aggregates.total.amount.value)).to.be.true;",
+							"        postman.setEnvironmentVariable(\"billerBillID\", bill.billerBillID);",
+							"        postman.setEnvironmentVariable(\"billAmount\", bill.aggregates.total.amount.value);",
 							"    }",
 							"});",
 							"",
@@ -243,7 +245,12 @@
 							"signature = base64url(signature);",
 							"var signedToken = token + \".\" + signature;",
 							"console.log(signedToken);",
-							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);"
+							"postman.setEnvironmentVariable(\"BearerToken\", \"Bearer \" + signedToken);",
+							"",
+							"postman.setEnvironmentVariable(\"randVal1\", Math.floor(Math.random()*1e15) + ''); ",
+							"postman.setEnvironmentVariable(\"randVal2\", Math.floor(Math.random()*1e15) + ''); ",
+							"postman.setEnvironmentVariable(\"randVal3\", Math.floor(Math.random()*1e15) + ''); ",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -315,7 +322,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"billerBillID\"   : \"12123131322\",\n    \"platformBillID\" : \"SETU121341312121\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"TXN12121219\",\n        \"uniquePaymentRefID\"       : \"XXXXAYYDDD999999\",\n        \"amountPaid\" : {\n            \"value\" : 99000 \n        },\n        \"billAmount\" : {\n            \"value\" : 99000\n        }\n    }\n}"
+					"raw": "{\n    \"billerBillID\"   : \"{{billerBillID}}\",\n    \"platformBillID\" : \"{{randVal1}}\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"{{randVal12}}\",\n        \"uniquePaymentRefID\"       : \"{{randVal3}}\",\n        \"amountPaid\" : {\n            \"value\" : {{billAmount}} \n        },\n        \"billAmount\" : {\n            \"value\" : {{billAmount}}\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "http://mock-biller-api.setu.tech/bills/fetchReceipt",
