@@ -52,7 +52,7 @@
 							"            console.log(bill.dueDate)",
 							"            pm.expect(dateRe.test(bill.dueDate)).to.be.true;",
 							"        }",
-							"        pm.expect(bill.recurrence).to.be.oneOf(['ONE_TIME', \"WEEKLY\", \"DAILY\", \"MONTHLY\", \"FORTNIGHTY\", \"YEARLY\", \"HALF_YEARLY\", \"QUARTERLY\"]);",
+							"        pm.expect(bill.recurrence).to.be.oneOf(['ONE_TIME', \"WEEKLY\", \"DAILY\", \"MONTHLY\", \"FORTNIGHTY\", \"YEARLY\", \"HALF_YEARLY\", \"QUARTERLY\", \"AS_PRESENTED\"]);",
 							"        pm.expect(bill.recurrence).to.exist;",
 							"        pm.expect(bill.amountExactness).to.be.oneOf(['EXACT', \"EXACT_UP\", \"EXACT_DOWN\", \"RANGE\", \"ANY\"]);",
 							"        pm.expect(bill.customerAccount).to.exist;",
