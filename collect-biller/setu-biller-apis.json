@@ -322,7 +322,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"billerBillID\"   : \"{{billerBillID}}\",\n    \"platformBillID\" : \"{{randVal1}}\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"{{randVal12}}\",\n        \"uniquePaymentRefID\"       : \"{{randVal3}}\",\n        \"amountPaid\" : {\n            \"value\" : {{billAmount}} \n        },\n        \"billAmount\" : {\n            \"value\" : {{billAmount}}\n        }\n    }\n}"
+					"raw": "{\n    \"billerBillID\"   : \"{{billerBillID}}\",\n    \"platformBillID\" : \"{{randVal1}}\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"{{randVal2}}\",\n        \"uniquePaymentRefID\"       : \"{{randVal3}}\",\n        \"amountPaid\" : {\n            \"value\" : {{billAmount}} \n        },\n        \"billAmount\" : {\n            \"value\" : {{billAmount}}\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "http://mock-biller-api.setu.tech/bills/fetchReceipt",
