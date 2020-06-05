@@ -78,7 +78,7 @@
 						"id": "10c573f7-3f2b-498f-863d-e47e39fa60bf",
 						"exec": [
 							"var schemeId = \"4331-9bbc-6b93265b-fbe98dae-20b4\";",
-							"var secret = '77521f510c0f-7e2f-40dc-a9d4-d05250325419';",
+							"var secret = \"77521f510c0f-7e2f-40dc-a9d4-d05250325419\";",
 							"",
 							"",
 							"var jti = Math.floor(Math.random()*1e15) + '';",
@@ -188,7 +188,7 @@
 						"id": "6632cbea-c790-4343-ad93-1f39a36e63c5",
 						"exec": [
 							"var schemeId = \"4331-9bbc-6b93265b-fbe98dae-20b4\";",
-							"var secret = '77521f510c0f-7e2f-40dc-a9d4-d05250325419';",
+							"var secret = \"77521f510c0f-7e2f-40dc-a9d4-d05250325419\";",
 							"",
 							"",
 							"var jti = Math.floor(Math.random()*1e15) + '';",
@@ -290,9 +290,6 @@
 							"    var receipt = jsonData.data.receipt;",
 							"    pm.expect(receipt.id).to.exist;",
 							"    pm.expect(dateRe.test(receipt.date)).to.be.true;",
-							"    pm.expect(jsonData.data.billerBillID).to.be.equal(request_data.billerBillID);",
-							"    pm.expect(jsonData.data.platformBillID).to.be.equal(request_data.platformBillID);",
-							"    pm.expect(jsonData.data.platformTransactionRefID).to.be.equal(request_data.paymentDetails.platformTransactionRefID);",
 							"    ",
 							"});",
 							"",
@@ -322,7 +319,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"billerBillID\"   : \"{{billerBillID}}\",\n    \"platformBillID\" : \"{{randVal1}}\",\n    \"paymentDetails\" : {\n        \"platformTransactionRefID\" : \"{{randVal2}}\",\n        \"uniquePaymentRefID\"       : \"{{randVal3}}\",\n        \"amountPaid\" : {\n            \"value\" : {{billAmount}} \n        },\n        \"billAmount\" : {\n            \"value\" : {{billAmount}}\n        }\n    }\n}"
+					"raw": "{\n    \"billerBillID\"   : \"{{billerBillID}}\",\n    \"platformBillID\" : \"{{randVal1}}\",\n    \"paymentDetails\" : {\n        \"instrument\" : \"UPI\",\n        \"uniquePaymentRefID\"       : \"{{randVal3}}\",\n        \"amountPaid\" : {\n            \"value\" : {{billAmount}} \n        },\n        \"billAmount\" : {\n            \"value\" : {{billAmount}}\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "http://mock-biller-api.setu.tech/bills/fetchReceipt",
